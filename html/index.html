@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    <div class="container" style="height: 810px; border: 1px solid;">
+    <div class="container" style="height: 800px; border: 1px solid;">
         <div class="row">
                 <img src="../img/scr.jpg" alt="" style="width: 100%;">
         </div>
@@ -78,10 +78,10 @@
                                         <label class="col-form-label">Mã học viên</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" class="form-control" placeholder="123456789" id="id">
+                                        <input type="text" class="form-control" placeholder="03-123456789" id="id">
                                     </div>
                                     <div class="col-3">
-                                        <span id="er-id" class="text-danger">*</span>
+                                        <span id="er-id">*</span>
                                     </div>
                                 </div>
                                 <div class="row form-group p-2">
@@ -92,7 +92,7 @@
                                         <input type="text" class="form-control" id="name" placeholder="Tran Thu Trang">
                                     </div>
                                     <div class="col-3">
-                                        <span id="er-name" class="text-danger">*</span>
+                                        <span id="er-name">*</span>
                                     </div>
                                 </div>
                                 <div class="row form-group p-2">
@@ -103,7 +103,7 @@
                                         <input type="text" id="email" class="form-control" placeholder="thutrang@iuh.edu.vn">
                                     </div>
                                     <div class="col-3">
-                                        <span id="er-email" class="text-danger">*</span>
+                                        <span id="er-email">*</span>
                                     </div>
                                 </div>
                                 <div class="row form-group p-2">
@@ -166,7 +166,11 @@
                                     <button class="btn btn-danger col-6" id="close1">Hủy</button>
                                 </div>
                             </form>
-                        </div>  
+                            <div class="modal-footer">
+                                <h5><b>Trang thanh toán</b></h5>
+                            </div>
+                        </div> 
+                       
                     </div>
                 </div>
             </div>
@@ -179,142 +183,175 @@
             <div class="col-sm-4"><h6>Phòng thi:___________________</h6></div>
         </div>
     </div>
-
     <script>
-       // Biến toàn cục cho STT
-let currentSTT = 2;
-
-// Mở và đóng modal
-var modal = document.getElementById("checkoutModal");
-const closeBtns = document.querySelectorAll("[data-bs-dismiss='modal']");
-closeBtns.forEach(btn => btn.addEventListener("click", function () {
-    modal.style.display = "none";
-}));
-
-// Thay đổi giá dịch vụ
-var dichVu = document.getElementById("dvu");
-var pDichVu = document.getElementById("pDvu");
-dichVu.addEventListener("change", function () {
-    let total = 0;
-    switch (dichVu.value) {
-        case "1":
-            total = 50000;
-            break;
-        case "2":
-            total = 100000;
-            break;
-        case "3":
-            total = 150000;
-            break;
-    }
-    pDichVu.value = total;
-    changeTotalPrice();
-});
-
-// Thay đổi giá đồ dùng
-var ck1 = document.getElementById("ck1");
-var ck2 = document.getElementById("ck2");
-var ck3 = document.getElementById("ck3");
-var pDoDung = document.getElementById("pDdung");
-ck1.addEventListener("change", changePriceDoDung);
-ck2.addEventListener("change", changePriceDoDung);
-ck3.addEventListener("change", changePriceDoDung);
-function changePriceDoDung() {
-    let total = 0;
-    if (ck1.checked)
-        total += 20000;
-    if (ck2.checked)
-        total += 30000;
-    if (ck3.checked)
-        total += 40000;
-    pDoDung.value = total;
-    changeTotalPrice();
-}
-
-// Tính totalPrice
-var totalPrice = document.getElementById("totalPrice");
-function changeTotalPrice() {
-    totalPrice.value = Number(pDichVu.value) + Number(pDoDung.value);
-}
-
-// Submit form
-var submit = document.getElementById("submit");
-submit.addEventListener("click", function (event) {
-    event.preventDefault(); 
-    var id = document.getElementById("id").value;
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
-    var erId = document.getElementById("er-id");
-    var erName = document.getElementById("er-name");
-    var erEmail = document.getElementById("er-email");
-
-    var regId = /^[0-9]{9}$/; 
-    var regName = /(^[A-Z]{1}[a-z]+)(\s[A-Z]{1}[a-z]*)+$/;
-    var regEmail = /^[\w-\.]+@iuh.edu.vn$/;
-
-    let hasError = false; 
-
-    if (id === "" || name === "" || email === "" || !(regId.test(id)) || !(regName.test(name)) || !(regEmail.test(email))) {
-        alert("Hãy nhập đầy đủ thông tin hoặc kiểm tra lại thông tin nhập!!!");
-
-        erId.innerText = id === "" ? "Vui lòng nhập mã!!" : !(regId.test(id)) ? "Mã sai định dạng!!" : "";
-        erName.innerText = name === "" ? "Vui lòng nhập tên !!" : !(regName.test(name)) ? "Tên sai định dạng !!" : "";
-        erEmail.innerText = email === "" ? "Vui lòng nhập email !!" : !(regEmail.test(email)) ? "Email sai định dạng !!" : "";
-
-        hasError = true; 
-    } else {
-        alert("Thanh toán thành công!");
-
-        // Hiển thị kết quả trên trang chính
-        displayResult(id, name, email, pDichVu.value, pDoDung.value, totalPrice.value);
+        // Biến toàn cục cho STT
+        let currentSTT = 2;
         
-        resetForm(); 
-        modal.style.display = "none"; 
+        // Mở và đóng modal
+        var modal = document.getElementById("checkoutModal");
+        const closeBtns = document.querySelectorAll("[data-bs-dismiss='modal']");
+        closeBtns.forEach(btn => btn.addEventListener("click", function () {
+            modal.style.display = "none";
+        }));
         
-        // Ẩn lớp overlay Bootstrap nếu có
-        const bootstrapModalBackdrop = document.querySelector('.modal-backdrop');
-        if (bootstrapModalBackdrop) {
-            bootstrapModalBackdrop.remove();
+        // Thay đổi giá dịch vụ
+        var dichVu = document.getElementById("dvu");
+        var pDichVu = document.getElementById("pDvu");
+        dichVu.addEventListener("change", function () {
+            let total = 0;
+            switch (dichVu.value) {
+                case "1":
+                    total = 50000;
+                    break;
+                case "2":
+                    total = 100000;
+                    break;
+                case "3":
+                    total = 150000;
+                    break;
+            }
+            pDichVu.value = total;
+            changeTotalPrice();
+        });
+        
+        // Thay đổi giá đồ dùng
+        var ck1 = document.getElementById("ck1");
+        var ck2 = document.getElementById("ck2");
+        var ck3 = document.getElementById("ck3");
+        var pDoDung = document.getElementById("pDdung");
+        ck1.addEventListener("change", changePriceDoDung);
+        ck2.addEventListener("change", changePriceDoDung);
+        ck3.addEventListener("change", changePriceDoDung);
+        function changePriceDoDung() {
+            let total = 0;
+            if (ck1.checked)
+                total += 20000;
+            if (ck2.checked)
+                total += 30000;
+            if (ck3.checked)
+                total += 40000;
+            pDoDung.value = total;
+            changeTotalPrice();
         }
-    }
+        
+        // Tính totalPrice
+        var totalPrice = document.getElementById("totalPrice");
+        function changeTotalPrice() {
+            totalPrice.value = Number(pDichVu.value) + Number(pDoDung.value);
+        }
+        
+        // Kiểm tra và báo lỗi ngay khi người dùng nhập sai
+        function validateInput(input, regex, errorElement) {
+            if (input.value === "") {
+                errorElement.innerText = "Bắt buộc nhập!";
+                errorElement.style.color = "red";
+            } else if (!regex.test(input.value)) {
+                errorElement.innerText = "Sai định dạng!";
+                errorElement.style.color = "red";
+            } else {
+                errorElement.innerText = "*";
+                errorElement.style.color = "green"; // Chuyển sang màu xanh nếu hợp lệ
+            }
+        }
+        
+        // Gán sự kiện `blur` cho các trường nhập liệu
+        document.getElementById("id").addEventListener("blur", function () {
+        validateInput(this, /^[0-9]{2}-[0-9]{8}$/, document.getElementById("er-id"));
+    });
 
-    if (hasError) {
-        return; 
-    }
-});
+        document.getElementById("name").addEventListener("blur", function () {
+            validateInput(this, /(^[A-Z]{1}[a-z]+)(\s[A-Z]{1}[a-z]*)+$/, document.getElementById("er-name"));
+        });
+        document.getElementById("email").addEventListener("blur", function () {
+            validateInput(this, /^[\w-\.]+@iuh.edu.vn$/, document.getElementById("er-email"));
+        });
+        
+        // Submit form
+        var submit = document.getElementById("submit");
+        submit.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var erId = document.getElementById("er-id");
+            var erName = document.getElementById("er-name");
+            var erEmail = document.getElementById("er-email");
+        
+            var regId = /^[0-9]{2}-[0-9]{8}$/; 
+            var regName = /(^[A-Z]{1}[a-z]+)(\s[A-Z]{1}[a-z]*)+$/; 
+            var regEmail = /^[\w-\.]+@iuh.edu.vn$/;
+        
+            let hasError = false; 
+        
+            if (id === "" || name === "" || email === "" || !(regId.test(id)) || !(regName.test(name)) || !(regEmail.test(email))) {
+                alert("Hãy nhập đầy đủ thông tin hoặc kiểm tra lại thông tin nhập!!!");
+        
+                erId.innerText = id === "" ? "Nhập mã dạng xx-yyyyyyyy!!" : !(regId.test(id)) ? "Mã sai định dạng!!" : "";
+                erId.style.color = erId.innerText ? "red" : "green";
+        
+                erName.innerText = name === "" ? "Vui lòng nhập tên !!" : !(regName.test(name)) ? "Tên sai định dạng !!" : "";
+                erName.style.color = erName.innerText ? "red" : "green";
+        
+                erEmail.innerText = email === "" ? "Vui lòng nhập email !!" : !(regEmail.test(email)) ? "Email sai định dạng !!" : "";
+                erEmail.style.color = erEmail.innerText ? "red" : "green";
+        
+                hasError = true; 
+            } else {
+                // Hiển thị kết quả trên trang chính
+                displayResult(id, name, email, pDichVu.value, pDoDung.value, totalPrice.value);
+                
+                resetForm(); 
+                modal.style.display = "none"; 
+                
+                // Ẩn lớp overlay Bootstrap nếu có
+                const bootstrapModalBackdrop = document.querySelector('.modal-backdrop');
+                if (bootstrapModalBackdrop) {
+                    bootstrapModalBackdrop.remove();
+                }
+            }
+        
+            if (hasError) {
+                return; 
+            }
+        });
+        
+        // Hàm hiển thị kết quả
+        function displayResult(id, name, email, dichVuPrice, doDungPrice, total) {
+            const resultTable = document.querySelector("tbody");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${currentSTT}</td>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${dichVuPrice}</td>
+                <td>${doDungPrice}</td>
+                <td>${total}</td>
+            `;
+            resultTable.appendChild(newRow);
+            currentSTT++; 
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById("id").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("pDvu").value = "50000";
+            document.getElementById("pDdung").value = "0";
+            totalPrice.value = "50000";
+        
+            // Reset các lỗi hiển thị
+            document.getElementById("er-id").innerText = "*";
+            document.getElementById("er-id").style.color = "black";
+            document.getElementById("er-name").innerText = "*";
+            document.getElementById("er-name").style.color = "black";
+            document.getElementById("er-email").innerText = "*";
+            document.getElementById("er-email").style.color = "black";
+        }
+        </script>
+        
+        
 
-// Hàm hiển thị kết quả
-function displayResult(id, name, email, dichVuPrice, doDungPrice, total) {
-    const resultTable = document.querySelector("tbody");
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-        <td>${currentSTT}</td>
-        <td>${id}</td>
-        <td>${name}</td>
-        <td>${email}</td>
-        <td>${dichVuPrice}</td>
-        <td>${doDungPrice}</td>
-        <td>${total}</td>
-    `;
-    resultTable.appendChild(newRow);
-    currentSTT++; // Tăng STT cho lần nhập tiếp theo
-}
-
-// Reset form
-function resetForm() {
-    document.getElementById("id").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("pDvu").value = "50000";
-    document.getElementById("pDdung").value = "0";
-    totalPrice.value = "50000";
-
-    // Reset các lỗi hiển thị
-    document.getElementById("er-id").innerText = "*";
-    document.getElementById("er-name").innerText = "*";
-    document.getElementById("er-email").innerText = "*";
-}
-
- </script>
 </body>
 </html>
